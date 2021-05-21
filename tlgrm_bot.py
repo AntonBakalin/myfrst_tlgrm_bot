@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+
 import telebot
-from pprint import pprint
+
 
 token = "1857806552:AAGaAv4TjI5AyAZE_2X98UDWkvruv6yKtqg"
 
