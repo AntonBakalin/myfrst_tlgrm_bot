@@ -4,11 +4,12 @@ import time
 import telebot
 import threading
 import BotLib as bl
-
-with open('key.txt', 'r', encoding='utf-8') as key_file:
+import os
+print(os.curdir)
+with open('./key.txt', 'r', encoding='utf-8') as key_file:
     token = key_file.read()
 
-bot = telebot.TeleBot(token=token)
+bot = telebot.TeleBot(token)
 print(token)
 
 
