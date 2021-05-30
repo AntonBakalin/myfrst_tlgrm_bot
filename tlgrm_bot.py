@@ -5,8 +5,10 @@ import telebot
 import threading
 import BotLib as bl
 import os
-print(os.curdir)
-with open('./key.txt', 'r', encoding='utf-8') as key_file:
+
+os.chdir('./myfrst_tlgrm_bot')
+
+with open('key.txt', 'r', encoding='utf-8') as key_file:
     token = key_file.read()
 
 bot = telebot.TeleBot(token)
@@ -99,13 +101,18 @@ def Checker():
                     out_msg = 'Появились новые торги!\nСкажи спасибо, Боту!\n'
                     bot.send_message(user, out_msg + lots_data, parse_mode="Markdown")
             bl.storeData(lots)
-            time.sleep(360)
+            time.sleep(8200)
+
+def Polling():
+    while True:
+        try:
+            bot.polling(none_stop=True)
+        except:
+            pass
 
 threadChecker = threading.Thread(target = Checker)
+threadPolling = threading.Thread(target = Polling)
 threadChecker.start()
+threadPolling.start()
 
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except:
-        pass
+
