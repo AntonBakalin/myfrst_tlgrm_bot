@@ -90,12 +90,14 @@ def Checker():
         urls = bl.getURLlist()
         lots = bl.getLots(urls)
         lots_data = bl.checkDiff(lots)
-        if lots_data:
-            for user in users:
-                out_msg = 'Появились новые торги!\nСкажи спасибо, Боту!\n'
-                bot.send_message(user, out_msg + lots_data, parse_mode="Markdown")
-        bl.storeData(lots)
-        time.sleep(360)
+        if users:
+            print(users)
+            if lots_data:
+                for user in users:
+                    out_msg = 'Появились новые торги!\nСкажи спасибо, Боту!\n'
+                    bot.send_message(user, out_msg + lots_data, parse_mode="Markdown")
+            bl.storeData(lots)
+            time.sleep(360)
 
 threadChecker = threading.Thread(target = Checker)
 threadChecker.start()
