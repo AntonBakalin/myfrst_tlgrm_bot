@@ -9,6 +9,7 @@ with open('key.txt', 'r', encoding='utf-8') as key_file:
     token = key_file.read()
 
 bot = telebot.TeleBot(token=token)
+print(token)
 
 
 @bot.message_handler(commands=['start'])
