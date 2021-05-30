@@ -46,7 +46,7 @@ def getLots(url_list):
                                  'like Gecko) Chrome/90.0.4430.212 Safari/537.36'}
 
         data = requests.get(url, headers=headers).text
-        reader = bs(data).find_all('div', 'row no-gutters registry-entry__form mr-0')
+        reader = bs(data, 'html.parser').find_all('div', 'row no-gutters registry-entry__form mr-0')
 
         purchases = {}
 

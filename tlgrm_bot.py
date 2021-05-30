@@ -4,11 +4,15 @@ import time
 import telebot
 import threading
 import BotLib as bl
+import os
+
+os.chdir('./myfrst_tlgrm_bot')
 
 with open('key.txt', 'r', encoding='utf-8') as key_file:
     token = key_file.read()
 
-bot = telebot.TeleBot(token=token)
+bot = telebot.TeleBot(token)
+print(token)
 
 
 @bot.message_handler(commands=['start'])
@@ -61,10 +65,10 @@ def check(message):
 @bot.message_handler(commands=['help'])
 def rethelp(message):
     user = message.chat.id
-    answer = '''Бот автоматически проверяет наличие закупок по ключевым словам на площадке Госзакупки.
+    answer = '''Бот автоматически проверяет наличие закупок по ключевым словам на площадке [Госзакупки](https://zakupki.gov.ru/).
 Ключевые слова зашиты в код для экономии времени.
 Команды:
-/start - Подписатся на обновления торгов.
+/start - Подписаться на обновления торгов.
 /stop - Отписаться от рассылки.
 /check - Принудительно проверить наличие новых торгов. Остальные пользователи получат уведомление.
 /current - Вывести список сохраненных торгов.
@@ -97,13 +101,18 @@ def Checker():
                     out_msg = 'Появились новые торги!\nСкажи спасибо, Боту!\n'
                     bot.send_message(user, out_msg + lots_data, parse_mode="Markdown")
             bl.storeData(lots)
-            time.sleep(360)
+            time.sleep(8200)
+
+def Polling():
+    while True:
+        try:
+            bot.polling(none_stop=True)
+        except:
+            pass
 
 threadChecker = threading.Thread(target = Checker)
+threadPolling = threading.Thread(target = Polling)
 threadChecker.start()
+threadPolling.start()
 
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except:
-        pass
+
