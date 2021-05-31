@@ -40,7 +40,7 @@ def stop(message):
 @bot.message_handler(commands=['check'])
 def check(message):
     user = message.chat.id
-    user_name = message.from_user.username
+    user_name = message.from_user.username.replace('_', ' ')
     users = bl.readUsers()['users']
     if str(user) in users:
         urls = bl.getURLlist()
@@ -50,12 +50,13 @@ def check(message):
             bot.send_message(user
                              , 'Появились новые торги!\n' + lots_data
                              , parse_mode="Markdown")
-            bl.storeData(lots)
             for another_user in users:
                 if another_user != str(user):
-                    out_msg = 'Появились новые торги!\nСкажи спасибо, ' + user_name + '\n'
-                    bot.send_message(another_user, out_msg + lots_data, parse_mode="Markdown")
-
+                    print(user_name, type(user_name),sep='_')
+                    out_msg = f'Появились новые торги!\nСкажи спасибо {user_name}!\n{lots_data}'
+                    print(out_msg)
+                    bot.send_message(another_user, out_msg, parse_mode='Markdown')
+            bl.storeData(lots)
         else:
             bot.send_message(user, 'Обновлений нет! (((\nПосмотреть текущие /current')
     else:
@@ -98,10 +99,10 @@ def Checker():
             print(users)
             if lots_data:
                 for user in users:
-                    out_msg = 'Появились новые торги!\nСкажи спасибо, Боту!\n'
-                    bot.send_message(user, out_msg + lots_data, parse_mode="Markdown")
+                    out_msg = 'Появились новые торги!\nСкажи спасибо Боту!\n{}'
+                    bot.send_message(user, out_msg.format(lots_data), parse_mode="Markdown")
             bl.storeData(lots)
-            time.sleep(8200)
+        time.sleep(8200)
 
 def Polling():
     while True:
