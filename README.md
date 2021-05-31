@@ -1,4 +1,5 @@
-myfrst_tlgrm_bot
+https://github.com/AntonBakalin/myfrst_tlgrm_bot
+
 Бот расположен на хостинге FirstVDS
 
 @gz_checker_bot
